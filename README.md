@@ -10,3 +10,8 @@
 - communities
 - posts
 - comments
+- chats
+
+# 채팅
+
+[Django Channels](https://channels.readthedocs.io/en/latest/index.html#django-channels): WebSocket, chat protocol 등등을 사용할 수 있게 해주는 모듈입니다. (추후 공부 필요)
