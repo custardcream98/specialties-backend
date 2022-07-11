@@ -42,7 +42,16 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
 ]
 
-PROJECT_APPS = []
+PROJECT_APPS = [
+    'core.apps.CoreConfig',
+    'agendas.apps.AgendasConfig',
+    'categories.apps.CategoriesConfig',
+    'chats.apps.ChatsConfig',
+    'comments.apps.CommentsConfig',
+    'communities.apps.CommunitiesConfig',
+    'posts.apps.PostsConfig',
+    'users.apps.UsersConfig'
+]
 
 THIRD_PARTY_APPS = [
     'corsheaders'
@@ -115,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'ko_KR'
+LANGUAGE_CODE = 'ko-kr'
 
 TIME_ZONE = 'UTC'
 
@@ -142,3 +151,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
 ]
 CORS_ALLOW_CREDENTIALS = True
+
+
+# Auth User Model
+AUTH_USER_MODEL = 'users.User'
