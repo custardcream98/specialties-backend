@@ -6,11 +6,14 @@
 
 # Models
 
+- core
 - users
+- chats
 - communities
+- agendas
+- categories
 - posts
 - comments
-- chats
 
 # 채팅
 

@@ -1,3 +1,17 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+import users.models as userModels
 
-# Register your models here.
+
+@admin.register(userModels.User)
+class CustomUserAdmin(UserAdmin):
+    fieldsets = UserAdmin.fieldsets + (
+        (
+            "Custom Profile",
+            {
+                "fields": (
+                    "wallet_address",
+                )
+            }
+        ),
+    )
