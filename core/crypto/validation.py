@@ -8,6 +8,8 @@ import users.models as userModels
 from eth_account.messages import SignableMessage
 from eth_utils.curried import to_bytes
 from django.core.exceptions import ValidationError
+from rest_framework.authtoken.models import Token
+from rest_framework.response import Response
 
 
 class VarifySignedMsgView(APIView):
@@ -46,12 +48,11 @@ class VarifySignedMsgView(APIView):
 
             signed_address = (w3.eth.account.recover_message(signable_message=msg, signature=sig)).lower()
             if signed_address == wallet_address:
-                # Validation을 통과한 경우입니다.
-                pass
+                # Validation을 통과한 경우입니다. 로그인 토큰을 발급합니다.
+                token, _ = Token.objects.update_or_create(user=user)
+                return Response({"token":token.key}, status=status.HTTP_200_OK)  
             else:
-                raise ValidationError
-
-            return Response({}, status=status.HTTP_200_OK)        
+                raise ValidationError      
         except KeyError:
             return Response({"message": "INVALID_KEY"}, status=status.HTTP_400_BAD_REQUEST)
         except TypeError:

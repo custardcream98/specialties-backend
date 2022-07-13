@@ -18,3 +18,12 @@
 # 채팅
 
 [Django Channels](https://channels.readthedocs.io/en/latest/index.html#django-channels): WebSocket, chat protocol 등등을 사용할 수 있게 해주는 모듈입니다. (추후 공부 필요)
+
+# API
+
+## `/users`
+
+- `users/checkuser` : 유저 존재 유무 확인 후 nonce를 제공
+- `users/signup` : 유저 생성
+- `users/auth` : Web3 로그인을 위해 Frontend에서 서명된 signature를 검증
+- `users/checkpermission` : Token 유효성 검증

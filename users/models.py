@@ -15,9 +15,7 @@ class User(AbstractUser):
     avatar = models.ImageField(upload_to='avatars', blank=True)
 
     def __str__(self):
-        return f'{" | Addr " + self.wallet_address if self.wallet_address != "" else ""}'
+        return f'{"Addr " + self.wallet_address if self.wallet_address != "" else ""}'
     def save(self, *args, **kwargs):
         self.nonce = getNewNonce()
         return super().save(*args, **kwargs)
-    def getUserName(self) -> str:
-        return self.wallet_address[:5]
