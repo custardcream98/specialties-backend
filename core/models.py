@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 
 def get_left_user():
-    return get_user_model().objects.get_or_create(username='탈퇴한 회원')[0]
+    return get_user_model().objects.get_or_create(nickname='탈퇴한 회원', wallet_address='0x0000000000')[0]
 
 # def get_deleted_community():
 #     return communityModels.objects.get_or_create()
@@ -60,7 +60,7 @@ class AbstractContents(CreatedAndUpdatedModel):
     creator = models.TextField()
 
     def getCreatorName(self):
-        return self.creator.username if self.creator is not None else "익명"
+        return self.creator.nickname if self.creator is not None else "익명"
     def getContent(self):
         raise NotImplementedError( "getContent 정의해야 합니다." )
     def getEmojies(self):

@@ -9,7 +9,7 @@ class User(AbstractUser):
     '''
     User 모델
     '''
-
+    nickname = models.CharField(max_length=20, null=False)
     nonce = models.CharField(max_length=15)
     wallet_address = models.CharField(primary_key=True, max_length=37)
     avatar = models.ImageField(upload_to='avatars', blank=True)

@@ -26,13 +26,13 @@ class CommunityDetailSerialzer(serializers.ModelSerializer):
     def get_core_members(self, community):
         result = []
         for m in community.core_members.objects.all():
-            result.append(m.username)
+            result.append(m.nickname)
         return result
     
     def get_members(self, community):
         result = []
         for m in community.members.objects.all():
-            result.append(m.username)
+            result.append(m.nickname)
         return result
 
     def get_categories(self, community):

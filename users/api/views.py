@@ -50,15 +50,15 @@ class SignUpView(APIView):
                 raise ValidationError
 
            
-            username = f'user_{randomIdGenerator.randomId(seed=wallet_address)}'
+            nickname = f'user_{randomIdGenerator.randomId(seed=wallet_address)}'
             try:
                 # 랜덤 한글 닉네임 생성기 API 활용
                 # https://nickname.hwanmoo.kr/ 멋진 서비스 감사합니다
-                username = requests.get(f'https://nickname.hwanmoo.kr/?format=json&count=1&seed={user}').json()["words"][0]
+                nickname = requests.get(f'https://nickname.hwanmoo.kr/?format=json&count=1&seed={nickname}').json()["words"][0]
             except:
                 pass
 
-            user = userModels.User.objects.create(username=username, wallet_address=wallet_address)
+            user = userModels.User.objects.create(nickname=nickname, wallet_address=wallet_address, username = wallet_address)
 
             return Response({"nonce":user.nonce}, status=status.HTTP_200_OK)        
         except KeyError:
