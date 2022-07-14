@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.db import models
 import core.models as coreModels
 
@@ -6,7 +7,7 @@ class Community(coreModels.CreatedAndUpdatedModel):
     
     """ 커뮤니티 모델 """
 
-    id = models.CharField(max_length=50, primary_key=True)
+    id = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=80)
     description = models.TextField(null=True) # 커뮤니티 설명, 소개
     banner = models.ImageField(upload_to='avatars', blank=True)
@@ -20,5 +21,24 @@ class Community(coreModels.CreatedAndUpdatedModel):
     core_members = models.ManyToManyField("users.User", blank=True, related_name="communities_core")
     members = models.ManyToManyField("users.User", related_name="communities_member", blank=True)
 
+    # _total_member = 0
+    # @property
+    # def total_member(self):
+    #     return self._total_member
+
+    # _categories = []
+    # @property
+    # def categories(self):
+    #     for c in self.categories.objects.all():
+    #         self._categories.append()
+
     def __str__(self):
         return f'Community {self.name} | Leader {self.leader}'
+
+    def totalMember(self):
+        return self.core_members.objects.count() + self.members.objects.count() + 1
+    def categoryList(self):
+        category = []
+        for c in self.categories.objects.all():
+            category.append(c)
+        return category

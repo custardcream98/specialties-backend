@@ -3,13 +3,14 @@ from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 import rest_framework.status as status
-from core.crypto.nonce import getNewNonce
-import users.models as userModels
 from eth_account.messages import SignableMessage
 from eth_utils.curried import to_bytes
 from django.core.exceptions import ValidationError
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+import users.models as userModels
+from  core.modules.randomId import RandomIdGenerator
+randomIdGenerator = RandomIdGenerator()
 
 
 class VarifySignedMsgView(APIView):
@@ -43,7 +44,7 @@ class VarifySignedMsgView(APIView):
             )
 
             # nonce를 새로 발급합니다.
-            user.nonce = getNewNonce()
+            user.nonce = randomIdGenerator.randomId(seed=sig,size=15)
             user.save()
 
             signed_address = (w3.eth.account.recover_message(signable_message=msg, signature=sig)).lower()

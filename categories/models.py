@@ -15,6 +15,10 @@ class Category(models.Model):
 
     """ 커뮤니티 내의 카테고리 """
 
+    id = models.CharField(max_length=10, primary_key=True)
+    name = models.CharField(max_length=30)
+    order = models.IntegerField() # 커뮤니티 내에서 카테고리 order에 사용, 0부터 시작합니다.
+
     OPEN_TO_ALL = 'all'
     OPEN_TO_NONE = 'non'
     OPEN_TO_CERTAIN = 'cer'

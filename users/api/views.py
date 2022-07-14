@@ -1,10 +1,14 @@
+import requests
 from django.core.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 import rest_framework.status as status
+from core.modules.randomId import RandomIdGenerator
+from users.serializer import UserSerialzer
 import users.models as userModels
+randomIdGenerator = RandomIdGenerator()
 
 
 class CheckUserView(APIView):
@@ -45,7 +49,16 @@ class SignUpView(APIView):
             if user:
                 raise ValidationError
 
-            user = userModels.User.objects.create(username=wallet_address, wallet_address=wallet_address)
+           
+            username = f'user_{randomIdGenerator.randomId(seed=wallet_address)}'
+            try:
+                # 랜덤 한글 닉네임 생성기 API 활용
+                # https://nickname.hwanmoo.kr/ 멋진 서비스 감사합니다
+                username = requests.get(f'https://nickname.hwanmoo.kr/?format=json&count=1&seed={user}').json()["words"][0]
+            except:
+                pass
+
+            user = userModels.User.objects.create(username=username, wallet_address=wallet_address)
 
             return Response({"nonce":user.nonce}, status=status.HTTP_200_OK)        
         except KeyError:
@@ -66,3 +79,13 @@ class ValidateToken(APIView):
         token, _ = Token.objects.update_or_create(user=request.user)
 
         return Response({"message":"Permission Granted","token":token.key}, status=status.HTTP_200_OK) 
+
+class UserProfileView(APIView):
+    '''
+    User의 프로필을 가져옵니다.
+    '''
+
+    permission_classes=[IsAuthenticated]
+
+    def get(self, request):
+        return Response(UserSerialzer(request.user).data, status=status.HTTP_200_OK) 
