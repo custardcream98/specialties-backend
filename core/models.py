@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 
 def get_left_user():
-    return get_user_model().objects.get_or_create(nickname='탈퇴한 회원', wallet_address='0x0000000000')[0]
+    return get_user_model().objects.get_or_create(nickname='탈퇴한 회원', username='0x0000000000')[0]
 
 # def get_deleted_community():
 #     return communityModels.objects.get_or_create()
@@ -11,16 +11,6 @@ def get_left_user():
 class Emotions(models.Model):
 
     """ 감정표현 """
-
-    # name = models.CharField(max_length=40)
-
-    # EMOJI_CHOICES = (
-    #     ("💖", "사랑해요"),
-    #     ("👍", "좋아요"),
-    #     ("🚀", "투더무운"),
-    #     ("😎", "멋져요"),
-    #     ("😆", "웃겨요"),
-    # )
 
     emoji = models.CharField(max_length=5)
     emoji_count = models.IntegerField(default=0)

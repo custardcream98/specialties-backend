@@ -27,7 +27,7 @@ class CommunityView(APIView):
         leader_instance = request.user
 
         community_instance = communityModels.Community.objects.create(
-            id = randomIdGenerator.randomId(seed=leader_instance.wallet_address, size=10),
+            id = randomIdGenerator.randomId(seed=leader_instance.username, size=10),
             name = data['name'],
             description = data['description'],
             related_asset = data['related_asset'],

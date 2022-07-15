@@ -24,7 +24,7 @@ class CheckUserView(APIView):
             data = request.data
             wallet_address = data['address']
 
-            user = userModels.User.objects.filter(wallet_address=wallet_address)
+            user = userModels.User.objects.filter(username=wallet_address)
             return Response({"nonce":user.first().nonce} if user else {"nonce":0}, status=status.HTTP_200_OK)    
         except KeyError:
             return Response({"message": "INVALID_KEY"}, status=status.HTTP_400_BAD_REQUEST)
@@ -45,7 +45,7 @@ class SignUpView(APIView):
             data = request.data
             wallet_address = data['address']
 
-            user = userModels.User.objects.filter(wallet_address=wallet_address)
+            user = userModels.User.objects.filter(username=wallet_address)
             if user:
                 raise ValidationError
 
@@ -58,7 +58,7 @@ class SignUpView(APIView):
             except:
                 pass
 
-            user = userModels.User.objects.create(nickname=nickname, wallet_address=wallet_address, username = wallet_address)
+            user = userModels.User.objects.create(nickname=nickname, username=wallet_address)
 
             return Response({"nonce":user.nonce}, status=status.HTTP_200_OK)        
         except KeyError:

@@ -7,7 +7,7 @@
 # Models
 
 - core
-- users
+- users : username을 지갑 주소로 간주합니다.
 - chats
 - communities
 - agendas

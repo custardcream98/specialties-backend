@@ -32,7 +32,7 @@ class VarifySignedMsgView(APIView):
             data = JSONParser().parse(request)
 
             wallet_address = data['address']
-            user = userModels.User.objects.get(wallet_address=wallet_address)
+            user = userModels.User.objects.get(username=wallet_address)
             sig = data['signature']
 
             message_bytes = to_bytes(text=f'Specialties 로그인을 위한 서명입니다.\n로그인을 위한 과정이니 걱정하지 마세요!\n\nnonce : {user.nonce}')
